@@ -16,11 +16,12 @@ void main() {
     range: aYearFromNow,
   );
 
-  final nextMonday = WeekdayRecurrence(data: DateTime.monday).nextOccurrence(
+  final nextMonday =
+      WeeklyRecurrenceRule(weekday: DateTime.monday).nextOccurrence(
     Moment.now(),
   );
 
-  final allFirstOfMayThisCentury = YearlyRecurrence(
+  final allFirstOfMayThisCentury = YearlyRecurrenceRule(
     month: DateTime.may,
     day: 1,
   ).occurrences(

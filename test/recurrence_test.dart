@@ -1,11 +1,11 @@
-import 'package:recurrence/recurrence.dart';
-import 'package:test/test.dart';
 import 'package:moment_dart/moment_dart.dart';
+import 'package:recurrence/recurrence.dart';
 import 'package:recurrence/src/interval.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('DailyRecurrenceRule', () {
-    final rule = DailyRecurrenceRule();
+    final rule = RecurrenceRule.daily();
 
     test('satisfies always returns true', () {
       expect(rule.satisfies(DateTime.now()), true);
@@ -37,7 +37,7 @@ void main() {
   });
 
   group('WeeklyRecurrence', () {
-    final rule = WeekdayRecurrence(data: DateTime.monday);
+    final rule = WeeklyRecurrenceRule(weekday: DateTime.monday);
 
     test('satisfies checks weekday', () {
       expect(rule.satisfies(DateTime(2024, 3, 18)), true); // Monday
@@ -85,7 +85,7 @@ void main() {
   });
 
   group('YearlyRecurrence', () {
-    final rule = YearlyRecurrence(month: 3, day: 15);
+    final rule = YearlyRecurrenceRule(month: 3, day: 15);
 
     test('satisfies checks month and day', () {
       expect(rule.satisfies(DateTime(2024, 3, 15)), true);

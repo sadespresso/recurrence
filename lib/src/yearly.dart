@@ -11,14 +11,14 @@ class YearlyRecurrenceMonthDay {
         super();
 }
 
-class YearlyRecurrence extends RecurrenceRule<YearlyRecurrenceMonthDay> {
+class YearlyRecurrenceRule extends RecurrenceRule<YearlyRecurrenceMonthDay> {
   @override
   final YearlyRecurrenceMonthDay data;
 
-  YearlyRecurrence({required int month, required int day})
+  YearlyRecurrenceRule({required int month, required int day})
       : data = YearlyRecurrenceMonthDay(month, day);
 
-  const YearlyRecurrence.withData({required this.data});
+  const YearlyRecurrenceRule.withData({required this.data});
 
   @override
   DateTime? nextOccurrence(DateTime from, {TimeRange? range}) {

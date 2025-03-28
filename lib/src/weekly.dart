@@ -1,7 +1,7 @@
 import 'package:moment_dart/moment_dart.dart';
 import 'package:recurrence/src/base.dart';
 
-class WeekdayRecurrence extends RecurrenceRule<int> {
+class WeeklyRecurrenceRule extends RecurrenceRule<int> {
   /// Same number as DateTime defined weekdays.
   ///
   /// * 1 is Monday (same as [DateTime.monday])
@@ -9,8 +9,9 @@ class WeekdayRecurrence extends RecurrenceRule<int> {
   @override
   final int data;
 
-  const WeekdayRecurrence({required this.data})
-      : assert(data >= DateTime.monday && data <= DateTime.sunday),
+  const WeeklyRecurrenceRule({required int weekday})
+      : assert(weekday >= DateTime.monday && weekday <= DateTime.sunday),
+        data = weekday,
         super();
 
   @override

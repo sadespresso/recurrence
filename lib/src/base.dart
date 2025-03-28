@@ -1,4 +1,6 @@
 import "package:moment_dart/moment_dart.dart";
+import "package:recurrence/recurrence.dart";
+import "package:recurrence/src/interval.dart";
 
 abstract class RecurrenceRule<T> {
   const RecurrenceRule();
@@ -53,4 +55,30 @@ abstract class RecurrenceRule<T> {
 
     return result;
   }
+
+  /// Just a constant interval, adds or subtracts `const Duration(days: 1)`
+  static DailyRecurrenceRule daily() => const DailyRecurrenceRule();
+
+  static WeeklyRecurrenceRule weekly(int weekday) =>
+      WeeklyRecurrenceRule(weekday: weekday);
+
+  /// [day] - gets clamped per each month.
+  ///
+  /// e.g.,
+  /// When day is `31`, it may be clamped to `28` in february, or `30` in november
+  static MonthlyRecurrenceRule monthly(int day) =>
+      MonthlyRecurrenceRule(day: day);
+
+  /// [month], [day]. Both gets clamped.
+  ///
+  /// e.g.,
+  /// * When month is `4` and day is `31`, the day will be clamped to `30` since april has only `30` days.
+  /// * When month is `2` and day is `29`, the day will be clamped to `28` on non-leap years since february has only `28` days in non-leap years.
+  ///
+  static YearlyRecurrenceRule yearly(int month, int day) =>
+      YearlyRecurrenceRule(month: month, day: day);
+
+  /// Just a constant interval based on the [from] date.
+  static IntervalRecurrenceRule interval(Duration data) =>
+      IntervalRecurrenceRule(data: data);
 }
