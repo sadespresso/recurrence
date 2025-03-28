@@ -8,7 +8,7 @@ funding:
   - https://buymeacoffee.com/sadespresso
 
 environment:
-  sdk: ^2.19.0
+  sdk: ">=2.19.4 <4.0.0"
 
 dependencies:
   moment_dart: ^4.1.0
