@@ -1,3 +1,4 @@
+// ignore_for_file: unused_local_variable
 import 'package:moment_dart/moment_dart.dart';
 import 'package:recurrence/recurrence.dart';
 import 'package:recurrence/src/interval.dart';
