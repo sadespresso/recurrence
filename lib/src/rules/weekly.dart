@@ -1,5 +1,5 @@
 import 'package:moment_dart/moment_dart.dart';
-import 'package:recurrence/src/base.dart';
+import 'package:recurrence/src/rules/base.dart';
 
 class WeeklyRecurrenceRule extends RecurrenceRule<int> {
   /// Same number as DateTime defined weekdays.
@@ -13,6 +13,37 @@ class WeeklyRecurrenceRule extends RecurrenceRule<int> {
       : assert(weekday >= DateTime.monday && weekday <= DateTime.sunday),
         data = weekday,
         super();
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (other is! WeeklyRecurrenceRule) return false;
+
+    if (other.data != data) return false;
+
+    return true;
+  }
+
+  @override
+  int get hashCode => data.hashCode;
+
+  @override
+  String serialize() => "weekly;$data";
+
+  static WeeklyRecurrenceRule parse(String data) {
+    final int weekday = int.parse(data);
+
+    if (weekday < DateTime.monday || weekday > DateTime.sunday) {
+      throw ArgumentError.value(
+        data,
+        "data",
+        "Weekday must be in range [1,7]",
+      );
+    }
+
+    return WeeklyRecurrenceRule(weekday: weekday);
+  }
 
   @override
   DateTime? nextOccurrence(DateTime from, {TimeRange? range}) {

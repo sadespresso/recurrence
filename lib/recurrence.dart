@@ -1,7 +1,8 @@
 library;
 
-export 'src/base.dart';
-export 'src/daily.dart';
-export 'src/monthly.dart';
-export 'src/weekly.dart';
-export 'src/yearly.dart';
+export 'src/rules/base.dart';
+export 'src/rules/interval.dart';
+export 'src/rules/monthly.dart';
+export 'src/rules/weekly.dart';
+export 'src/rules/yearly.dart';
+export 'src/recurrence.dart';

@@ -13,6 +13,45 @@ class MonthlyRecurrenceRule extends RecurrenceRule<int> {
         super();
 
   @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    if (other is! MonthlyRecurrenceRule) return false;
+
+    if (other.data != data) return false;
+
+    return true;
+  }
+
+  @override
+  int get hashCode => data.hashCode;
+
+  @override
+  String serialize() => "monthly;$data";
+
+  static MonthlyRecurrenceRule parse(String data) {
+    final int day = int.parse(data);
+
+    if (day < 1 || day > 31) {
+      throw ArgumentError.value(
+        data,
+        "data",
+        "Day must be in range [1,31]",
+      );
+    }
+
+    return MonthlyRecurrenceRule(day: day);
+  }
+
+  static MonthlyRecurrenceRule? tryParse(String data) {
+    try {
+      return parse(data);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  @override
   DateTime? nextOccurrence(DateTime from, {TimeRange? range}) {
     final DateTime currentMonthCandidate =
         DateTimeConstructors.dateWithTimezone(

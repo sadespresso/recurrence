@@ -1,3 +1,9 @@
+## 0.0.3
+
+- Made recurrence rules data classes (implemented equality, hashing)
+- Rules are now serializable
+- Added Recurrence class
+
 ## 0.0.2
 
 - Refactor names

@@ -1,11 +1,16 @@
 import "package:moment_dart/moment_dart.dart";
 import "package:recurrence/recurrence.dart";
-import "package:recurrence/src/interval.dart";
 
 abstract class RecurrenceRule<T> {
   const RecurrenceRule();
 
   T get data;
+
+  /// Must be parseable back to the same rule
+  String serialize();
+
+  @override
+  String toString() => serialize();
 
   /// Returns the next occurrence after [from]
   ///
@@ -56,8 +61,40 @@ abstract class RecurrenceRule<T> {
     return result;
   }
 
+  static RecurrenceRule parse(String data) {
+    final parts = data.split(";");
+
+    switch (parts[0]) {
+      case "daily":
+        return const IntervalRecurrenceRule(data: Duration(days: 1));
+      case "weekly":
+        return WeeklyRecurrenceRule.parse(data);
+      case "monthly":
+        return MonthlyRecurrenceRule.parse(data);
+      case "yearly":
+        return YearlyRecurrenceRule.parse(data);
+      case "interval":
+        return IntervalRecurrenceRule.parse(data);
+      default:
+        throw ArgumentError.value(
+          data,
+          "data",
+          "Unknown recurrence rule",
+        );
+    }
+  }
+
+  static RecurrenceRule? tryParse(String data) {
+    try {
+      return parse(data);
+    } catch (_) {
+      return null;
+    }
+  }
+
   /// Just a constant interval, adds or subtracts `const Duration(days: 1)`
-  static DailyRecurrenceRule daily() => const DailyRecurrenceRule();
+  static IntervalRecurrenceRule daily() =>
+      const IntervalRecurrenceRule(data: Duration(days: 1));
 
   static WeeklyRecurrenceRule weekly(int weekday) =>
       WeeklyRecurrenceRule(weekday: weekday);
