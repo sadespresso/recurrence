@@ -64,6 +64,14 @@ class YearlyRecurrenceRule extends RecurrenceRule<YearlyRecurrenceMonthDay> {
       );
     }
 
+    if (parts[0] != "yearly") {
+      throw ArgumentError.value(
+        data,
+        "data",
+        "Data must start with 'yearly;'",
+      );
+    }
+
     final month = int.parse(parts[1]);
 
     if (month < DateTime.january || month > DateTime.december) {

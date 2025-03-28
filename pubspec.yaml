@@ -1,6 +1,6 @@
 name: recurrence
 description: A custom recurrence rule implementation
-version: 0.0.3
+version: 0.0.4
 repository: https://github.com/sadespresso/recurrence
 homepage: https://github.com/sadespresso/recurrence
 issue_tracker: https://github.com/sadespresso/moment_dart/issues

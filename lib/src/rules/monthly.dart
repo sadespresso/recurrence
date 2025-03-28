@@ -30,7 +30,25 @@ class MonthlyRecurrenceRule extends RecurrenceRule<int> {
   String serialize() => "monthly;$data";
 
   static MonthlyRecurrenceRule parse(String data) {
-    final int day = int.parse(data);
+    final parts = data.split(";");
+
+    if (parts.length != 2) {
+      throw ArgumentError.value(
+        data,
+        "data",
+        "Data must have exactly one semicolon",
+      );
+    }
+
+    if (parts[0] != "monthly") {
+      throw ArgumentError.value(
+        data,
+        "data",
+        "Data must start with 'monthly;'",
+      );
+    }
+
+    final int day = int.parse(parts[1]);
 
     if (day < 1 || day > 31) {
       throw ArgumentError.value(
@@ -43,7 +61,7 @@ class MonthlyRecurrenceRule extends RecurrenceRule<int> {
     return MonthlyRecurrenceRule(day: day);
   }
 
-  static MonthlyRecurrenceRule? tryParse(String data) {
+  MonthlyRecurrenceRule? tryParse(String data) {
     try {
       return parse(data);
     } catch (_) {

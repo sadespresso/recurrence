@@ -32,7 +32,25 @@ class WeeklyRecurrenceRule extends RecurrenceRule<int> {
   String serialize() => "weekly;$data";
 
   static WeeklyRecurrenceRule parse(String data) {
-    final int weekday = int.parse(data);
+    final parts = data.split(";");
+
+    if (parts.length != 2) {
+      throw ArgumentError.value(
+        data,
+        "data",
+        "Invalid data",
+      );
+    }
+
+    if (parts[0] != "weekly") {
+      throw ArgumentError.value(
+        data,
+        "data",
+        "Data must start with 'weekly;'",
+      );
+    }
+
+    final weekday = int.parse(parts[1]);
 
     if (weekday < DateTime.monday || weekday > DateTime.sunday) {
       throw ArgumentError.value(
