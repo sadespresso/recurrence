@@ -1,3 +1,8 @@
+## 0.0.5
+
+- Update `moment_dart` to `5.0.1`
+- Add `Recurrence.occurences` that combines occurences from rules
+
 ## 0.0.4
 
 - Bug fixes

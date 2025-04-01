@@ -10,6 +10,16 @@ class Recurrence {
 
   const Recurrence({required this.range, required this.rules});
 
+  List<DateTime> occurrences({required TimeRange range}) {
+    final Set<DateTime> result = {};
+
+    for (final rule in rules) {
+      result.addAll(rule.occurrences(range: range));
+    }
+
+    return result.toList()..sort((a, b) => a.compareTo(b));
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
