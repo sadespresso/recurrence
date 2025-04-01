@@ -1,3 +1,7 @@
+## 0.0.6
+
+- Update description for pub points
+
 ## 0.0.5
 
 - Update `moment_dart` to `5.0.1`
