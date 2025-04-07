@@ -1,7 +1,17 @@
 import 'package:moment_dart/moment_dart.dart';
 import 'package:recurrence/recurrence.dart';
 
+/// This rule does not consider any type of special logic, such as leap years,
+/// clamping, or overflow.
+///
+/// It simply represents [data] offsets from the given range's [TimeRange.from]
+/// property.
+///
 /// [satisfies] always returns true
+///
+/// e.g., Every 1 hour, every 100 milliseconds, etc.
+///
+/// If you want to use multiple rules, check out [Recurrence].
 class IntervalRecurrenceRule extends RecurrenceRule<Duration> {
   @override
   final Duration data;

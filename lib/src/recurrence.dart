@@ -3,8 +3,15 @@ import 'package:recurrence/src/rules/base.dart';
 
 /// Use this class to define a recurrence pattern.
 ///
+/// [range] is very important as its [TimeRange.from] property is used to
+/// calculate the next occurrence.
+///
 /// Use [toJson] and [fromJson] to serialize and deserialize a recurrence.
+///
+/// For two rules to be equal, they must have the same [range] and the same
+/// [rules] (with the same order)
 class Recurrence {
+  /// Its `.from` will be used as anchor for the next occurrence.
   final TimeRange range;
   final List<RecurrenceRule> rules;
 

@@ -8,7 +8,7 @@ Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  recurrence: ^0.0.1
+  recurrence: ^0.0.7
 ```
 
 ## Usage
@@ -96,7 +96,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ### Issues
 
-If you find any issues or have suggestions for improvements, please file them in the GitHub issue tracker.
+If you find any issues or have suggestions for improvements, please file them in
+the GitHub issue tracker.
 
 ### License
 

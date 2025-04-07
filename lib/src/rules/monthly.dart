@@ -1,6 +1,15 @@
 import "package:moment_dart/moment_dart.dart";
 import "package:recurrence/recurrence.dart";
 
+/// A specific day of the month.
+///
+/// e.g., Every 1st, Every 31st, etc.
+///
+/// This handles overflows, e.g., February 30th will be clamped to February 28th or 29th.
+///
+/// Similarly, February 29th will only occur in leap years, and will be clamped to February 28th in non-leap years.
+///
+/// If you want to use multiple rules, check out [Recurrence].
 class MonthlyRecurrenceRule extends RecurrenceRule<int> {
   /// Allowed range is [1,31], this is not enforced, expect unexpected behavior
   /// for illegal values.

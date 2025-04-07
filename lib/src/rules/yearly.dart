@@ -1,6 +1,15 @@
 import "package:moment_dart/moment_dart.dart";
 import "package:recurrence/src/rules/base.dart";
 
+/// Each year's same day and month.
+///
+/// e.g., January 1st, February 14th, etc.
+///
+/// This handles overflows, e.g., February 30th will be clamped to February 28th or 29th.
+///
+/// Similarly, February 29th will only occur in leap years, and will be clamped to February 28th in non-leap years.
+///
+/// If you want to use multiple rules, check out [Recurrence].
 class YearlyRecurrenceMonthDay {
   final int month;
   final int day;

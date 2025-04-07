@@ -1,6 +1,13 @@
 import 'package:moment_dart/moment_dart.dart';
 import 'package:recurrence/src/rules/base.dart';
 
+/// Each week's same weekday.
+///
+/// Concept of "week" is same as [moment_dart](https://pub.dev/packages/moment_dart)'s.
+///
+/// e.g., Every Monday, every Tuesday, etc.
+///
+/// If you want to use multiple rules, check out [Recurrence].
 class WeeklyRecurrenceRule extends RecurrenceRule<int> {
   /// Same number as DateTime defined weekdays.
   ///
