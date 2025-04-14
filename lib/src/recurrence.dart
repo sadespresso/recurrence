@@ -76,9 +76,18 @@ class Recurrence {
     return "Recurrence(range: $range, rules: $rules)";
   }
 
+  /// Serializes the rule into a string.
+  ///
+  /// You can use [Recurrence.deserialize] to deserialize it.
   String serialize() =>
       "${rules.map((rule) => rule.serialize()).join("&")}->${range.encodeShort()}";
 
+  /// Deserializes a string into a [Recurrence] object.
+  ///
+  /// The string must be in the format of
+  /// `rule1&rule2->range`, where `rule1` and `rule2` are the serialized
+  /// representations of the rules [RecurrenceRule], and `range` is the serialized representation
+  /// of the range ([TimeRange]).
   static Recurrence deserialize(String serialized) {
     final parts = serialized.split("->");
     final range = TimeRange.parse(parts[1]);
@@ -87,8 +96,10 @@ class Recurrence {
     return Recurrence(range: range, rules: rules);
   }
 
+  /// Synonym for [deserialize]
   static Recurrence parse(String serialized) => deserialize(serialized);
 
+  /// Synonym for [deserialize], but returns null if the string is not valid
   static Recurrence? tryParse(String serialized) {
     try {
       return parse(serialized);
@@ -97,6 +108,7 @@ class Recurrence {
     }
   }
 
+  /// Serializes the rule into a JSON object.
   Map<String, dynamic> toJson() {
     return {
       "range": range.encodeShort(),
@@ -104,6 +116,9 @@ class Recurrence {
     };
   }
 
+  /// Deserializes a JSON object into a [Recurrence] object.
+  ///
+  /// The JSON object must have the following structure:
   factory Recurrence.fromJson(Map<String, dynamic> json) {
     return Recurrence(
       range: TimeRange.parse(json["range"]),

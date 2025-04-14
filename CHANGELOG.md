@@ -1,3 +1,9 @@
+## 0.0.8
+
+- Added `Recurrence.forever`
+- Added `Recurrence.fromIndefinitely`
+- Added `Recurrence().copyWith`
+
 ## 0.0.7
 
 - Add docs for public APIs
