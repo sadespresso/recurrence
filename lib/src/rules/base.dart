@@ -1,6 +1,9 @@
 import "package:moment_dart/moment_dart.dart";
 import "package:recurrence/recurrence.dart";
 
+/// [RecurrenceRule] does not represent any occurrence, or point in time. It
+/// simply represents how one should calculate the next occurence based off of
+/// an anchor (from).
 abstract class RecurrenceRule<T> {
   const RecurrenceRule();
 
@@ -9,6 +12,7 @@ abstract class RecurrenceRule<T> {
   /// Must be parseable back to the same rule
   String serialize();
 
+  /// Returns the same value as [serialize]
   @override
   String toString() => serialize();
 

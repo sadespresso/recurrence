@@ -1,3 +1,7 @@
+## 0.0.7
+
+- Add docs for public APIs
+
 ## 0.0.6
 
 - Update description for pub points
