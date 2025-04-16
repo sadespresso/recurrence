@@ -1,3 +1,10 @@
+## 0.0.9
+
+- Added `Recurrence().nextOccurrence`
+- Added `Recurrence().previousOccurrence`
+- Added `Recurrence().nextAbsoluteOccurrence`
+- Added `Recurrence().previousAbsoluteOccurrence`
+
 ## 0.0.8
 
 - Added `Recurrence.forever`

@@ -54,6 +54,102 @@ class Recurrence {
     return result.toList()..sort((a, b) => a.compareTo(b));
   }
 
+  /// Returns the closest next occurence anchored to [from], that also fits
+  /// the [range]. If there are no occurrences, it returns null.
+  ///
+  /// Be careful with the [range] as it will ignore occurences that are
+  /// more closer to [from], but isn't in the [range]
+  DateTime? nextOccurrence(DateTime from, {TimeRange? range}) {
+    final List<DateTime?> occurences = rules
+        .map((rule) => rule.nextOccurrence(from, range: range))
+        .where((o) => o != null)
+        .toSet()
+        .toList();
+
+    if (occurences.isEmpty) return null;
+
+    occurences.sort(_nextComparator);
+
+    return occurences.first;
+  }
+
+  /// Returns the closest next occurence anchored to [from], that also fits
+  /// the [range]. If there are no occurrences, it returns null.
+  ///
+  /// Be careful with the [range] as it will ignore occurences that are
+  /// more closer to [from], but isn't in the [range]
+  DateTime? previousOccurrence(DateTime from, {TimeRange? range}) {
+    final List<DateTime?> occurences = rules
+        .map((rule) => rule.previousOccurrence(from, range: range))
+        .where((o) => o != null)
+        .toSet()
+        .toList();
+
+    if (occurences.isEmpty) return null;
+
+    occurences.sort(_prevComparator);
+
+    return occurences.first;
+  }
+
+  /// Returns the next occurence anchored to [from]. If the nearest occurence
+  /// does not fit in [range], returns null.
+  ///
+  /// This is different from [nextOccurrence], as it will return null if the
+  /// closest occurence does not fit in the range, even if there are possible
+  /// next closest occurences that fit in the range.
+  ///
+  /// e.g., If you have weekly and monthly recurrence, but only the monthly
+  /// recurrence's `nextOccurrence` fits in the range, it will not be returned
+  /// as weekly's `nextOccurrence` is nearer.
+  DateTime? nextAbsoluteOccurrence(DateTime from, {TimeRange? range}) {
+    final List<DateTime?> occurences =
+        rules.map((rule) => rule.nextOccurrence(from)).toSet().toList();
+
+    if (occurences.isEmpty) {
+      return null;
+    }
+
+    occurences.sort(_nextComparator);
+
+    final DateTime candidate = occurences.first!;
+
+    if (range == null || range.contains(candidate)) {
+      return candidate;
+    }
+
+    return null;
+  }
+
+  /// Returns the previous occurence anchored to [from]. If the nearest occurence
+  /// does not fit in [range], returns null.
+  ///
+  /// This is different from [previousOccurrence], as it will return null if the
+  /// closest occurence does not fit in the range, even if there are possible
+  /// next closest occurences that fit in the range.
+  ///
+  /// e.g., If you have weekly and monthly recurrence, but only the monthly
+  /// recurrence's `previousOccurrence` fits in the range, it will not be returned
+  /// as weekly's `previousOccurrence` is nearer.
+  DateTime? previousAbsoluteOccurrence(DateTime from, {TimeRange? range}) {
+    final List<DateTime?> occurences =
+        rules.map((rule) => rule.previousOccurrence(from)).toSet().toList();
+
+    if (occurences.isEmpty) {
+      return null;
+    }
+
+    occurences.sort(_prevComparator);
+
+    final DateTime candidate = occurences.first!;
+
+    if (range == null || range.contains(candidate)) {
+      return candidate;
+    }
+
+    return null;
+  }
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -130,4 +226,18 @@ class Recurrence {
 
   @override
   int get hashCode => Object.hashAll([range, rules]);
+
+  static int _nextComparator(DateTime? a, DateTime? b) {
+    if (a == null && b == null) return 0;
+    if (a == null) return -1;
+    if (b == null) return 1;
+    return a.compareTo(b);
+  }
+
+  static int _prevComparator(DateTime? a, DateTime? b) {
+    if (a == null && b == null) return 0;
+    if (a == null) return 1;
+    if (b == null) return -1;
+    return b.compareTo(a);
+  }
 }
