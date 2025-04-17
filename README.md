@@ -8,7 +8,7 @@ Add the package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  recurrence: ^0.0.7
+  recurrence: ^0.0.9
 ```
 
 ## Usage
