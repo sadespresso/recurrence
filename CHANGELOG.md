@@ -1,3 +1,8 @@
+## 0.1.0
+
+- Update public API docs
+- Update docs
+
 ## 0.0.9
 
 - Added `Recurrence().nextOccurrence`
