@@ -1,4 +1,5 @@
 import "package:moment_dart/moment_dart.dart";
+import "package:recurrence/src/alignable.dart";
 import "package:recurrence/src/rules/base.dart";
 
 /// Each year's same day and month.
@@ -36,7 +37,8 @@ class YearlyRecurrenceMonthDay {
         super();
 }
 
-class YearlyRecurrenceRule extends RecurrenceRule<YearlyRecurrenceMonthDay> {
+class YearlyRecurrenceRule extends RecurrenceRule<YearlyRecurrenceMonthDay>
+    implements Alignable<YearlyRecurrenceRule> {
   @override
   final YearlyRecurrenceMonthDay data;
 
@@ -169,4 +171,12 @@ class YearlyRecurrenceRule extends RecurrenceRule<YearlyRecurrenceMonthDay> {
       date.month == data.month &&
       date.day == data.day &&
       (range == null || range.contains(date));
+
+  @override
+  YearlyRecurrenceRule alignTo(DateTime from) => YearlyRecurrenceRule.withData(
+        data: YearlyRecurrenceMonthDay(
+          from.month,
+          from.day,
+        ),
+      );
 }

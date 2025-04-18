@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Added aligner functions
+
 ## 0.1.0
 
 - Update public API docs

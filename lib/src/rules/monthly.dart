@@ -1,5 +1,6 @@
 import "package:moment_dart/moment_dart.dart";
 import "package:recurrence/recurrence.dart";
+import "package:recurrence/src/alignable.dart";
 
 /// A specific day of the month.
 ///
@@ -10,7 +11,8 @@ import "package:recurrence/recurrence.dart";
 /// Similarly, February 29th will only occur in leap years, and will be clamped to February 28th in non-leap years.
 ///
 /// If you want to use multiple rules, check out [Recurrence].
-class MonthlyRecurrenceRule extends RecurrenceRule<int> {
+class MonthlyRecurrenceRule extends RecurrenceRule<int>
+    implements Alignable<MonthlyRecurrenceRule> {
   /// Allowed range is [1,31], this is not enforced, expect unexpected behavior
   /// for illegal values.
   @override
@@ -137,4 +139,8 @@ class MonthlyRecurrenceRule extends RecurrenceRule<int> {
   @override
   bool satisfies(DateTime date, {TimeRange? range}) =>
       date.day == data && (range == null || range.contains(date));
+
+  @override
+  MonthlyRecurrenceRule alignTo(DateTime dateTime) =>
+      MonthlyRecurrenceRule(day: dateTime.day);
 }

@@ -1,4 +1,5 @@
 import 'package:moment_dart/moment_dart.dart';
+import 'package:recurrence/src/alignable.dart';
 import 'package:recurrence/src/rules/base.dart';
 
 /// Each week's same weekday.
@@ -8,7 +9,8 @@ import 'package:recurrence/src/rules/base.dart';
 /// e.g., Every Monday, every Tuesday, etc.
 ///
 /// If you want to use multiple rules, check out [Recurrence].
-class WeeklyRecurrenceRule extends RecurrenceRule<int> {
+class WeeklyRecurrenceRule extends RecurrenceRule<int>
+    implements Alignable<WeeklyRecurrenceRule> {
   /// Same number as DateTime defined weekdays.
   ///
   /// * 1 is Monday (same as [DateTime.monday])
@@ -95,4 +97,8 @@ class WeeklyRecurrenceRule extends RecurrenceRule<int> {
   @override
   bool satisfies(DateTime date, {TimeRange? range}) =>
       date.weekday == data && (range == null || range.contains(date));
+
+  @override
+  WeeklyRecurrenceRule alignTo(DateTime dateTime) =>
+      WeeklyRecurrenceRule(weekday: dateTime.weekday);
 }
