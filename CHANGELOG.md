@@ -1,3 +1,7 @@
+## 0.2.1
+
+- [FIX] Expose Alignable to the package
+
 ## 0.2.0
 
 - Added aligner functions

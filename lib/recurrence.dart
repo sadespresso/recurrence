@@ -1,5 +1,6 @@
 library;
 
+export 'src/alignable.dart';
 export 'src/rules/base.dart';
 export 'src/rules/interval.dart';
 export 'src/rules/monthly.dart';

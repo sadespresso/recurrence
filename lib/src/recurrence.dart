@@ -1,4 +1,5 @@
 import 'package:moment_dart/moment_dart.dart';
+import 'package:recurrence/src/alignable.dart';
 import 'package:recurrence/src/rules/base.dart';
 
 /// Use this class to define a recurrence pattern.
@@ -44,6 +45,17 @@ class Recurrence {
         range: range ?? this.range,
         rules: rules ?? this.rules,
       );
+
+  Recurrence realign() => copyWith(
+          rules: rules.map((rule) {
+        if (rule is Alignable) {
+          final Alignable alignable = rule as Alignable;
+
+          return alignable.alignTo(range.from);
+        }
+
+        return rule;
+      }).toList());
 
   List<DateTime> occurrences({required TimeRange range}) {
     final Set<DateTime> result = {};

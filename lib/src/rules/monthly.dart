@@ -1,6 +1,5 @@
 import "package:moment_dart/moment_dart.dart";
 import "package:recurrence/recurrence.dart";
-import "package:recurrence/src/alignable.dart";
 
 /// A specific day of the month.
 ///
