@@ -96,15 +96,15 @@ void main() {
       );
 
       // Check occurrences for a month
-      final checkRange = MonthTimeRange(2025, 1).toUtc();
-      final occurrences = recurrence.occurrences(range: checkRange);
+      final checkRange = MonthTimeRange(2025, 1);
+      final occurrences = recurrence.occurrences(subrange: checkRange);
 
       // Calculate expected Mondays in January 2025
       final expectedMondays = [
-        DateTime.utc(2025, 1, 6),
-        DateTime.utc(2025, 1, 13),
-        DateTime.utc(2025, 1, 20),
-        DateTime.utc(2025, 1, 27),
+        DateTime(2025, 1, 6),
+        DateTime(2025, 1, 13),
+        DateTime(2025, 1, 20),
+        DateTime(2025, 1, 27),
       ];
 
       expect(occurrences, containsAll(expectedMondays));
@@ -124,7 +124,7 @@ void main() {
         DateTime(2029, 12, 31),
       ).toUtc();
 
-      final occurrences = recurrence.occurrences(range: checkRange);
+      final occurrences = recurrence.occurrences(subrange: checkRange);
 
       final expectedDates = [
         for (int year = 2020; year <= 2029; year++) DateTime.utc(year, 1, 1)
@@ -149,7 +149,7 @@ void main() {
         rules: [mondayRule, fridayRule],
       );
 
-      final occurrences = updated.occurrences(range: originalRange);
+      final occurrences = updated.occurrences(subrange: originalRange);
 
       // Expected Mondays and Fridays in January 2025
       final expectedDates = [

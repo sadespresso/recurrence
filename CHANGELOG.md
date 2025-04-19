@@ -1,3 +1,9 @@
+## 0.3.0
+
+- Recurrence now searches within its range for occurences, next/prev occurence
+  functions.
+- Updated and fixed docs
+
 ## 0.2.1
 
 - [FIX] Expose Alignable to the package

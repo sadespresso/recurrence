@@ -57,7 +57,7 @@ void main() {
         // So nextOccurrence should filter it out and pass null to the comparator
         final nextOccurrence = recurrence.nextOccurrence(
           DateTime(2025, 1, 15),
-          range: restrictedRange,
+          subrange: restrictedRange,
         );
 
         // Since the rule's occurrence is outside the range, it becomes null
@@ -86,7 +86,7 @@ void main() {
         // - weeklyRule gives 2025-02-05 (first Wednesday in February)
         final nextOccurrence = recurrence.nextOccurrence(
           DateTime(2025, 1, 31),
-          range: restrictedRange,
+          subrange: restrictedRange,
         );
         expect(nextOccurrence, equals(DateTime(2025, 2, 1)));
       });
@@ -242,7 +242,7 @@ void main() {
         // This is within the range, so it should be returned
         final nextOccurrence = recurrence.nextAbsoluteOccurrence(
           DateTime(2025, 1, 10),
-          range: recurrence.range,
+          subrange: recurrence.range,
         );
         expect(nextOccurrence, equals(DateTime(2025, 1, 11)));
       });
@@ -264,7 +264,7 @@ void main() {
 
         final nextOccurrence = recurrence.nextAbsoluteOccurrence(
           DateTime(2025, 1, 10),
-          range: restrictedRange,
+          subrange: restrictedRange,
         );
         // Should return null even though there are occurrences in February
         expect(nextOccurrence, isNull);
@@ -288,7 +288,7 @@ void main() {
 
         final nextOccurrence = recurrence.nextAbsoluteOccurrence(
           DateTime(2025, 1, 10),
-          range: restrictedRange,
+          subrange: restrictedRange,
         );
         expect(nextOccurrence, isNull);
       });
@@ -325,7 +325,7 @@ void main() {
         // This is within the range, so it should be returned
         final prevOccurrence = recurrence.previousAbsoluteOccurrence(
           DateTime(2025, 1, 10),
-          range: recurrence.range,
+          subrange: recurrence.range,
         );
         expect(prevOccurrence, equals(DateTime(2025, 1, 9)));
       });
@@ -345,7 +345,7 @@ void main() {
         // But our recurrence range is only February, so this is outside the range
         final prevOccurrence = recurrence.previousAbsoluteOccurrence(
           DateTime(2025, 3, 2),
-          range: recurrence.range,
+          subrange: recurrence.range,
         );
         // Should return null even though there are occurrences in February
         expect(prevOccurrence, isNull);
@@ -369,7 +369,7 @@ void main() {
 
         final prevOccurrence = recurrence.previousAbsoluteOccurrence(
           DateTime(2025, 3, 1),
-          range: restrictedRange,
+          subrange: restrictedRange,
         );
         expect(prevOccurrence, isNull);
       });
@@ -407,13 +407,13 @@ void main() {
 
         final nextAbsolute = recurrence.nextAbsoluteOccurrence(
           DateTime(2025, 1, 30),
-          range: restrictedRange,
+          subrange: restrictedRange,
         );
         expect(nextAbsolute, isNull);
 
         final next = recurrence.nextOccurrence(
           DateTime(2025, 1, 30),
-          range: restrictedRange,
+          subrange: restrictedRange,
         );
         expect(next, equals(DateTime(2025, 2, 3)));
       });
@@ -433,7 +433,7 @@ void main() {
 
         final prevAbsolute = recurrence.previousAbsoluteOccurrence(
           DateTime(2025, 4, 2),
-          range: restrictedRange,
+          subrange: restrictedRange,
         );
         expect(prevAbsolute, isNull);
 

@@ -11,7 +11,7 @@ void main() {
     final recurrence = Recurrence(range: range, rules: [rule, rule2]);
 
     expect(
-      recurrence.occurrences(range: range),
+      recurrence.occurrences(subrange: range),
       [
         DateTime.utc(2025, 1, 1),
         DateTime.utc(2025, 1, 6),
@@ -34,11 +34,11 @@ void main() {
     final recurrence =
         Recurrence(range: range, rules: [dailyRule, monthlyRule]);
 
-    final occurrences = recurrence.occurrences(range: range);
+    final occurrences = recurrence.occurrences(subrange: range);
 
     expect(occurrences.length, 31);
     expect(
-      recurrence.occurrences(range: range),
+      recurrence.occurrences(subrange: range),
       [for (int i = 1; i <= 31; i++) DateTime.utc(2025, 1, i)],
     );
   });
@@ -51,7 +51,7 @@ void main() {
     final recurrence =
         Recurrence(range: range, rules: [yearlyRule, intervalRule]);
 
-    final occurrences = recurrence.occurrences(range: range);
+    final occurrences = recurrence.occurrences(subrange: range);
 
     expect(occurrences.length, 37);
 
@@ -70,7 +70,9 @@ void main() {
         Recurrence(range: range, rules: [weeklyRule, yearlyRule]);
 
     expect(
-      recurrence.occurrences(range: range).contains(DateTime.utc(2025, 12, 23)),
+      recurrence
+          .occurrences(subrange: range)
+          .contains(DateTime.utc(2025, 12, 23)),
       true,
     );
   });

@@ -57,11 +57,20 @@ class Recurrence {
         return rule;
       }).toList());
 
-  List<DateTime> occurrences({required TimeRange range}) {
+  /// Returns all occurences within the [subrange].
+  ///
+  /// You can provide [subrange] to narrow down the search to the intersection
+  /// of the [range] and the [subrange].
+  List<DateTime> occurrences({TimeRange? subrange}) {
     final Set<DateTime> result = {};
 
+    final TimeRange? effectiveRange =
+        subrange == null ? range : (range & subrange);
+
+    if (effectiveRange == null) return result.toList();
+
     for (final rule in rules) {
-      result.addAll(rule.occurrences(range: range));
+      result.addAll(rule.occurrences(range: effectiveRange));
     }
 
     return result.toList()..sort((a, b) => a.compareTo(b));
@@ -70,11 +79,19 @@ class Recurrence {
   /// Returns the closest next occurence anchored to [from], that also fits
   /// the [range]. If there are no occurrences, it returns null.
   ///
-  /// Be careful with the [range] as it will ignore occurences that are
-  /// more closer to [from], but isn't in the [range]
-  DateTime? nextOccurrence(DateTime from, {TimeRange? range}) {
+  /// You can provide [subrange] to narrow down the search to the intersection
+  /// of the [range] and the [subrange].
+  ///
+  /// Be careful with the [subrange] as it will ignore occurences that are
+  /// more closer to [from], but isn't in the [subrange]
+  DateTime? nextOccurrence(DateTime from, {TimeRange? subrange}) {
+    final TimeRange? effectiveRange =
+        subrange == null ? range : (range & subrange);
+
+    if (effectiveRange == null) return null;
+
     final List<DateTime?> occurences = rules
-        .map((rule) => rule.nextOccurrence(from, range: range))
+        .map((rule) => rule.nextOccurrence(from, range: effectiveRange))
         .where((o) => o != null)
         .toSet()
         .toList();
@@ -86,14 +103,22 @@ class Recurrence {
     return occurences.first;
   }
 
-  /// Returns the closest next occurence anchored to [from], that also fits
+  /// Returns the closest previous occurence anchored to [from], that also fits
   /// the [range]. If there are no occurrences, it returns null.
   ///
-  /// Be careful with the [range] as it will ignore occurences that are
-  /// more closer to [from], but isn't in the [range]
+  /// You can provide [subrange] to narrow down the search to the intersection
+  /// of the [range] and the [subrange].
+  ///
+  /// Be careful with the [subrange] as it will ignore occurences that are
+  /// more closer to [from], but isn't in the [subrange]
   DateTime? previousOccurrence(DateTime from, {TimeRange? range}) {
+    final TimeRange? effectiveRange =
+        range == null ? this.range : (this.range & range);
+
+    if (effectiveRange == null) return null;
+
     final List<DateTime?> occurences = rules
-        .map((rule) => rule.previousOccurrence(from, range: range))
+        .map((rule) => rule.previousOccurrence(from, range: effectiveRange))
         .where((o) => o != null)
         .toSet()
         .toList();
@@ -108,6 +133,9 @@ class Recurrence {
   /// Returns the next occurence anchored to [from]. If the nearest occurence
   /// does not fit in [range], returns null.
   ///
+  /// You can provide [subrange] to narrow down the search to the intersection
+  /// of the [range] and the [subrange].
+  ///
   /// This is different from [nextOccurrence], as it will return null if the
   /// closest occurence does not fit in the range, even if there are possible
   /// next closest occurences that fit in the range.
@@ -115,7 +143,12 @@ class Recurrence {
   /// e.g., If you have weekly and monthly recurrence, but only the monthly
   /// recurrence's `nextOccurrence` fits in the range, it will not be returned
   /// as weekly's `nextOccurrence` is nearer.
-  DateTime? nextAbsoluteOccurrence(DateTime from, {TimeRange? range}) {
+  DateTime? nextAbsoluteOccurrence(DateTime from, {TimeRange? subrange}) {
+    final TimeRange? effectiveRange =
+        subrange == null ? range : (range & subrange);
+
+    if (effectiveRange == null) return null;
+
     final List<DateTime?> occurences =
         rules.map((rule) => rule.nextOccurrence(from)).toSet().toList();
 
@@ -127,7 +160,7 @@ class Recurrence {
 
     final DateTime candidate = occurences.first!;
 
-    if (range == null || range.contains(candidate)) {
+    if (effectiveRange.contains(candidate)) {
       return candidate;
     }
 
@@ -137,6 +170,9 @@ class Recurrence {
   /// Returns the previous occurence anchored to [from]. If the nearest occurence
   /// does not fit in [range], returns null.
   ///
+  /// You can provide [subrange] to narrow down the search to the intersection
+  /// of the [range] and the [subrange].
+  ///
   /// This is different from [previousOccurrence], as it will return null if the
   /// closest occurence does not fit in the range, even if there are possible
   /// next closest occurences that fit in the range.
@@ -144,7 +180,12 @@ class Recurrence {
   /// e.g., If you have weekly and monthly recurrence, but only the monthly
   /// recurrence's `previousOccurrence` fits in the range, it will not be returned
   /// as weekly's `previousOccurrence` is nearer.
-  DateTime? previousAbsoluteOccurrence(DateTime from, {TimeRange? range}) {
+  DateTime? previousAbsoluteOccurrence(DateTime from, {TimeRange? subrange}) {
+    final TimeRange? effectiveRange =
+        subrange == null ? range : (range & subrange);
+
+    if (effectiveRange == null) return null;
+
     final List<DateTime?> occurences =
         rules.map((rule) => rule.previousOccurrence(from)).toSet().toList();
 
@@ -156,7 +197,7 @@ class Recurrence {
 
     final DateTime candidate = occurences.first!;
 
-    if (range == null || range.contains(candidate)) {
+    if (effectiveRange.contains(candidate)) {
       return candidate;
     }
 
